@@ -56,15 +56,6 @@ sub import {
         unless grep { $_ == $hook_log_is } @Log::ger::Hooks_Create_Log_Is_Routine;
 }
 
-sub unimport {
-    my $self = shift;
-
-    @Log::ger::Hooks_Create_Log_Routine =
-        grep { $_ != $hook_log } @Log::ger::Hooks_Create_Log_Routine;
-    @Log::ger::Hooks_Create_Log_Is_Routine =
-        grep { $_ != $hook_log_is } @Log::ger::Hooks_Create_Log_Is_Routine;
-}
-
 1;
 # ABSTRACT: Send log to Log::Any
 
