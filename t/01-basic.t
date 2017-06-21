@@ -11,7 +11,7 @@ package main;
 
 use vars '$str';
 use Log::Any::Adapter;
-Log::Any::Adapter->set('Callback', logging_cb => sub { use DD; dd \@_; $str .= $_[2] });
+Log::Any::Adapter->set('Callback', logging_cb => sub { $str .= $_[2] });
 
 use Log::ger::Output;
 Log::ger::Output->set('LogAny');

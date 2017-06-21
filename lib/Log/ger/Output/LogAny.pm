@@ -42,6 +42,8 @@ sub import {
 1;
 # ABSTRACT: Send log to Log::Any
 
+=for Pod::Coverage ^(.+)$
+
 =head1 SYNOPSIS
 
  use Log::ger::Output::LogAny;
