@@ -46,7 +46,7 @@ sub import {
 
 =head1 SYNOPSIS
 
- use Log::ger::Output::LogAny;
+ use Log::ger::Output 'LogAny';
  use Log::ger;
 
  log_warn "blah ...";
