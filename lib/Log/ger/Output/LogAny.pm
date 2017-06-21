@@ -14,7 +14,7 @@ my %Log_Any_Loggers;
 sub PRIO_create_log_routine { 50 }
 
 sub create_log_routine {
-    my %args = @_;
+    my ($self, %args) = @_;
 
     return unless $args{target} eq 'package';
     my $pkg = $args{target_arg};
@@ -27,6 +27,7 @@ sub create_log_routine {
     my $meth = $args{str_level}; # closure :(
 
     my $code = sub {
+        my $ctx = shift;
         $Log_Any_Loggers{$pkg}->$meth(@_);
     };
     [$code];
@@ -35,7 +36,7 @@ sub create_log_routine {
 sub import {
     my $self = shift;
 
-    Log::ger::add_plugin('create_log_routine', __PACKAGE__, 'replace');
+    Log::ger::Util::add_plugin('create_log_routine', __PACKAGE__, 'replace');
 }
 
 1;
