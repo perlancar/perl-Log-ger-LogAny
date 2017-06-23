@@ -6,41 +6,37 @@ package Log::ger::Output::LogAny;
 use strict;
 use warnings;
 
-use Log::Any ();
-use Log::ger::Util;
-
 my %Log_Any_Loggers;
 
-sub PRIO_create_log_routine { 50 }
+sub get_hooks {
+    my %conf = @_;
 
-sub create_log_routine {
-    my ($self, %args) = @_;
+    return {
+        create_log_routine => [
+            __PACKAGE__, 50,
+            sub {
+                my %args = @_;
 
-    return unless $args{target} eq 'package';
-    my $pkg = $args{target_arg};
+                return unless $args{target} eq 'package';
+                my $pkg = $args{target_arg};
 
-    {
-        my $log = Log::Any->get_logger(category => $pkg);
-        $Log_Any_Loggers{$pkg} = $log;
-    }
+                {
+                    my $log = Log::Any->get_logger(category => $pkg);
+                    $Log_Any_Loggers{$pkg} = $log;
+                }
 
-    my $meth = $args{str_level}; # closure :(
-
-    my $code = sub {
-        my $ctx = shift;
-        $Log_Any_Loggers{$pkg}->$meth(@_);
+                my $meth = $args{str_level};
+                my $logger = sub {
+                    my $ctx = shift;
+                    $Log_Any_Loggers{$pkg}->$meth(@_);
+                };
+                [$logger];
+            }],
     };
-    [$code];
-};
-
-sub import {
-    my $self = shift;
-
-    Log::ger::Util::add_plugin('create_log_routine', __PACKAGE__, 'replace');
 }
 
 1;
-# ABSTRACT: Send log to Log::Any
+# ABSTRACT: Send logs to Log::Any
 
 =for Pod::Coverage ^(.+)$
 
