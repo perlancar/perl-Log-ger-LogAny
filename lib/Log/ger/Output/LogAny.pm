@@ -17,7 +17,7 @@ sub get_hooks {
             sub {
                 my %args = @_;
 
-                return unless $args{target} eq 'package';
+                return [] unless $args{target} eq 'package';
                 my $pkg = $args{target_arg};
 
                 {
