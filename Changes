@@ -1,3 +1,8 @@
+0.004   2017-06-24 (PERLANCAR)
+
+	- [Bugfix] Return arrayref even when declining.
+
+
 0.003   2017-06-23 (PERLANCAR)
 
 	- Adjust to Log::ger 0.005.
