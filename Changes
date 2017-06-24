@@ -1,3 +1,8 @@
+0.005   2017-06-24 (PERLANCAR)
+
+        - Add missing prereq to Log::Any::Adapter::Callback [RT#122193].
+
+
 0.004   2017-06-24 (PERLANCAR)
 
 	- [Bugfix] Return arrayref even when declining.
