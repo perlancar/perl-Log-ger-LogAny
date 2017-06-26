@@ -6,8 +6,6 @@ package Log::ger::Output::LogAny;
 use strict;
 use warnings;
 
-my %Log_Any_Loggers;
-
 sub get_hooks {
     my %conf = @_;
 
@@ -17,18 +15,25 @@ sub get_hooks {
             sub {
                 my %args = @_;
 
-                return [] unless $args{target} eq 'package';
-                my $pkg = $args{target_arg};
-
-                {
-                    my $log = Log::Any->get_logger(category => $pkg);
-                    $Log_Any_Loggers{$pkg} = $log;
+                my $pkg;
+                if ($args{target} eq 'package') {
+                    $pkg = $args{target_arg};
+                } elsif ($args{target} eq 'object') {
+                    $pkg = ref $args{target_arg};
+                } else {
+                    return [];
                 }
+
+                # use init_args as a per-target stash
+                $args{init_args}{_la} ||= do {
+                    require Log::Any;
+                    Log::Any->get_logger(category => $pkg);
+                };
 
                 my $meth = $args{str_level};
                 my $logger = sub {
                     my $ctx = shift;
-                    $Log_Any_Loggers{$pkg}->$meth(@_);
+                    $args{init_args}{_la}->$meth(@_);
                 };
                 [$logger];
             }],
