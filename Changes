@@ -1,3 +1,8 @@
+0.006   2017-06-26 (PERLANCAR)
+
+	- Use per-target stash, [Bugfix] load Log::Any.
+
+
 0.005   2017-06-24 (PERLANCAR)
 
         - Add missing prereq to Log::Any::Adapter::Callback [RT#122193].
